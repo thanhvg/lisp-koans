@@ -14,13 +14,13 @@
 
 (define-test test-t-and-nil-are-opposites
     "not is a function which returns the boolean opposite of its argument"
-   (true-or-false? ___ (not nil))
-   (true-or-false? ___ (not t)))
+   (true-or-false? t (not nil))
+   (true-or-false? nil (not t)))
 
 
 (define-test test-nil-and-empty-list-are-the-same-thing
-  (true-or-false? ___ ())
-  (true-or-false? ___ (not ())))
+  (true-or-false? nil ())
+  (true-or-false? t (not ())))
 
 
 (define-test test-lots-of-things-are-true

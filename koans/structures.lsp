@@ -31,11 +31,11 @@
   (let ((player-1 (make-basketball-player
                    :name "larry" :team :celtics :number 33)))
     (assert-equal "larry" (basketball-player-name player-1))
-    (assert-equal ___ (basketball-player-team player-1))
-    (assert-equal ___ (basketball-player-number player-1))
+    (assert-equal :celtics (basketball-player-team player-1))
+    (assert-equal 33 (basketball-player-number player-1))
     (assert-equal 'basketball-player (type-of player-1))
     (setf (basketball-player-team player-1) :RETIRED)
-    (assert-equal ___ (basketball-player-team player-1))))
+    (assert-equal :RETIRED (basketball-player-team player-1))))
 
 
 ;; Struct fields can have default values
@@ -45,9 +45,9 @@
 
 (define-test test-struct-defaults
     (let ((player-2 (make-baseball-player)))
-      (assert-equal ___ (baseball-player-position player-2))
-      (assert-equal ___ (baseball-player-team player-2))
-      (assert-equal ___ (baseball-player-name player-2))))
+      (assert-equal :outfield (baseball-player-position player-2))
+      (assert-equal :red-sox (baseball-player-team player-2))
+      (assert-equal nil (baseball-player-name player-2))))
 
 
 ;; The accessor names can get pretty long.  It's possible to specify
@@ -58,7 +58,7 @@
 (define-test test-abbreviated-struct-access
     (let ((player-3 (make-american-football-player
                      :name "Drew Brees" :position :QB :team "Saints")))
-      (assert-equal ___ (nfl-guy-position player-3))))
+      (assert-equal :QB (nfl-guy-position player-3))))
 
 
 ;; Structs can be defined as EXTENSIONS to previous structures.

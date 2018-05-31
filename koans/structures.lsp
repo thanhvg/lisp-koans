@@ -74,13 +74,13 @@
                        :name "Kobe Bryant"
                        :team :LAKERS
                        :number 24)))
-      (assert-equal ___ (nba-contract-start-year contract-1))
-      (assert-equal ___ (type-of contract-1))
+      (assert-equal 2004 (nba-contract-start-year contract-1))
+      (assert-equal 'nba-contract (type-of contract-1))
       ;; do inherited structures follow the rules of type hierarchy?
-      (true-or-false? ___ (typep contract-1 'BASKETBALL-PLAYER))
+      (true-or-false? t (typep contract-1 'BASKETBALL-PLAYER))
       ;; can you access structure fields with the inherited accessors?
-      (assert-equal ___ (nba-contract-team contract-1))
-      (assert-equal ___ (basketball-player-team contract-1))))
+      (assert-equal :LAKERS (nba-contract-team contract-1))
+      (assert-equal :LAKERS (basketball-player-team contract-1))))
 
 
 ;; Copying of structs is handled with the copy-{name} form.  Note that
@@ -90,15 +90,15 @@
     (let ((manning-1 (make-american-football-player :name "Manning" :team '("Colts" "Broncos")))
           (manning-2 (make-american-football-player :name "Manning" :team '("Colts" "Broncos"))))
       ;; manning-1 and manning-2 are different objects
-      (true-or-false? ___ (eq manning-1 manning-2))
+      (true-or-false? nil (eq manning-1 manning-2))
       ;; but manning-1 and manning-2 contain the same information
       ;; (note the equalp instead of eq
-      (true-or-false? ___ (equalp manning-1 manning-2))
+      (true-or-false? t (equalp manning-1 manning-2))
       ;; copied structs are much the same.
-      (true-or-false? ___ (equalp manning-1 (copy-american-football-player manning-1)))
-      (true-or-false? ___ (eq     manning-1 (copy-american-football-player manning-1)))
+      (true-or-false? t (equalp manning-1 (copy-american-football-player manning-1)))
+      (true-or-false? nil (eq     manning-1 (copy-american-football-player manning-1)))
       ;; note that the copying is shallow
       (let ((shallow-copy (copy-american-football-player manning-1)))
         (setf (car (nfl-guy-team manning-1)) "Giants")
-        (assert-equal ___ (car (nfl-guy-team manning-1)))
-        (assert-equal ___ (car (nfl-guy-team shallow-copy))))))
+        (assert-equal "Giants" (car (nfl-guy-team manning-1)))
+        (assert-equal "Giants" (car (nfl-guy-team shallow-copy))))))

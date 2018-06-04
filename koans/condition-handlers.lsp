@@ -70,11 +70,11 @@ error handling code from normal operational code."
                 (handler-case (my-divide 6 2)
                   (my-div-by-zero-error (condition) :zero-div-error)
                   (my-non-number-args-error (condition) :bad-args)))
-  (assert-equal ___
+  (assert-equal :zero-div-error
                 (handler-case (my-divide 6 0)
                   (my-div-by-zero-error (condition) :zero-div-error)
                   (my-non-number-args-error (condition) :bad-args)))
-  (assert-equal ___
+  (assert-equal :bad-args
                 (handler-case (my-divide 6 "woops")
                   (my-div-by-zero-error (condition) :zero-div-error)
                   (my-non-number-args-error (condition) :bad-args))))

@@ -51,7 +51,33 @@
 
 (defun score (dice)
   ; You need to write this method
+
 )
+
+(defun score-fragments (dice)
+  (defun my-reduce (acc item)
+    (+ acc  (cond
+              ((equalp item 1) 100)
+              ((equalp item 5) 50)
+              (t 0))))
+  (reduce #'my-reduce dice :initial-value 0))
+;; (defun find-tripplet (dice n)
+;;   ( if (< (length dice) 3) nil
+;;        ()
+;;                                ))
+;; (defun find-nx-duplicates (n dice)
+;;   (cond
+;;     ((< length(dice) n) nil)
+;;     ((= n 1) (find n))))
+
+(defun has-duplicate (dice)
+  (if (< (length dice) 2) nil
+      (let ((has-dup (find (car dice) (cdr dice))))
+        (if has-dup has-dup (has-duplicate (cdr dice))))))
+
+
+  
+ 
 
 (define-test test-score-of-an-empty-list-is-zero
     (assert-equal 0 (score nil)))

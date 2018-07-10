@@ -49,10 +49,6 @@
 ;
 ; Your goal is to write the score method.
 
-(defun score (dice)
-  ; You need to write this method
-
-)
 
 (defun score-fragments (dice)
   (defun my-reduce (acc item)
@@ -69,15 +65,39 @@
 ;;   (cond
 ;;     ((< length(dice) n) nil)
 ;;     ((= n 1) (find n))))
+(defun find-nx-app (n a dice)
+  (let ((app 0))
+    (dolist (i dice) (if (= i a) (incf app)))
+    (if (>= app n) a nil)))
 
 (defun has-duplicate (dice)
   (if (< (length dice) 2) nil
       (let ((has-dup (find (car dice) (cdr dice))))
         (if has-dup has-dup (has-duplicate (cdr dice))))))
 
+(defun has-tripplet (dice)
+  (if (< (length dice) 3) nil
+      (let ((i-have-trpl (find-nx-app 2 (car dice) (cdr dice))))
+        (if i-have-trpl i-have-trpl (has-tripplet (cdr dice))))))
 
-  
- 
+(defun remove-tripplet (a dice)
+  (let ((my-rest '()) (c 0))
+    (dolist (i dice)
+      (if (and (= i a) (< c 3))
+          (incf c)
+          (setf my-rest (append my-rest (list i)))))
+    my-rest))
+
+(defun assest-tripplet (a)
+  (cond ((equalp a 1) 1000)
+        ((equalp a nil) 0)
+        (t (* a 100))))
+
+(defun score (dice)
+  (let ((i-have-tripplet (has-tripplet dice)) (rest nil))
+    (if i-have-tripplet (+ (score-fragments (remove-tripplet i-have-tripplet dice))
+                           (assest-tripplet i-have-tripplet))
+        (score-fragments dice))))
 
 (define-test test-score-of-an-empty-list-is-zero
     (assert-equal 0 (score nil)))
